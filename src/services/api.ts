@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "",
+  baseURL: "http://localhost:5000/",
   headers: {
     "Content-Type": "multipart/form-data",
   },
@@ -9,9 +9,9 @@ const api = axios.create({
 
 export const uploadVedio = async (file: File) => {
   const formData = new FormData();
-  formData.append("video", file);
+  formData.append("file", file);
   try {
-    const response = await api.post("/upload", formData);
+    const response = await api.post("/predict", formData);
     return response.data;
   } catch {
     console.log("Error uploading file");

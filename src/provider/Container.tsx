@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { ContainerProps } from "../types/types";
 import ContainerContext from "../context/ContainerContext";
 import { uploadVedio } from "../services/api";
+import { errorMessage, successMessage } from "../utility/messages";
 
 const Container: React.FC<ContainerProps> = ({ children }: ContainerProps) => {
   const [file, setFile] = useState<File | null>(null);
@@ -32,15 +33,28 @@ const Container: React.FC<ContainerProps> = ({ children }: ContainerProps) => {
     try {
       setIsAnalyzing(true);
       const response = await uploadVedio(file);
+      setIsUploading(false);
 
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      console.log(response);
+      if (response.status === 1) {
+        setResults({
+          success: true,
+          error: false,
+          message: successMessage,
+        });
+      } else {
+        setResults({
+          success: false,
+          error: true,
+          message: errorMessage,
+        });
+      }
+
       setIsAnalyzing(false);
     } catch {
       console.log("Error uploading file");
     }
-    setIsUploading(false);
   };
 
   const handleTechniqueSelect = (techniqueId: string) => {
