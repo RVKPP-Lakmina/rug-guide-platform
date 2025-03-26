@@ -37,7 +37,7 @@ const Container: React.FC<ContainerProps> = ({ children }: ContainerProps) => {
 
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      if (response.status === 1) {
+      if (response.status === 0) {
         setResults({
           success: true,
           error: false,
