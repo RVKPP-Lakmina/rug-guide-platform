@@ -15,6 +15,8 @@ const Container: React.FC<ContainerProps> = ({ children }: ContainerProps) => {
   }>(null);
   const [selectedTechnique, setSelectedTechnique] = useState("spin-pass");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -62,6 +64,24 @@ const Container: React.FC<ContainerProps> = ({ children }: ContainerProps) => {
     setResults(null);
   };
 
+  const openModal = () => {
+    setIsOpen(true);
+    setTimeout(() => {
+      if (videoRef.current) {
+        videoRef.current
+          .play()
+          .catch((err) => console.error("Error playing video:", err));
+      }
+    }, 100);
+  };
+
+  const closeModal = () => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
+    setIsOpen(false);
+  };
+
   return (
     <ContainerContext.Provider
       value={{
@@ -77,6 +97,10 @@ const Container: React.FC<ContainerProps> = ({ children }: ContainerProps) => {
         handleAnalyze,
         handleFileChange,
         fileInputRef,
+        openModal,
+        closeModal,
+        isOpen,
+        videoRef,
       }}
     >
       {children}

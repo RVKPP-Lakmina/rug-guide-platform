@@ -20,6 +20,10 @@ export interface ContainerContextType {
   handleAnalyze: () => void;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   fileInputRef: React.RefObject<HTMLInputElement> | React.RefObject<null>;
+  isOpen: boolean;
+  openModal: () => void;
+  closeModal: () => void;
+  videoRef: React.RefObject<HTMLVideoElement> | React.RefObject<null>;
 }
 
 export interface ContainerProps {

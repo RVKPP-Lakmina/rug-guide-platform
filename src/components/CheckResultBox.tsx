@@ -3,7 +3,7 @@ import { techniques } from "../utility/util";
 import useMainContainer from "../hooks/useMainContainer";
 
 const CheckResultBox = () => {
-  const { selectedTechnique, results } = useMainContainer();
+  const { selectedTechnique, results, openModal } = useMainContainer();
 
   return (
     <div className="space-y-3">
@@ -30,7 +30,15 @@ const CheckResultBox = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="text-sm text-emerald-400 hover:underline">
+            <span
+              className="text-sm text-emerald-400 hover:underline cursor-pointer"
+              onClick={() => {
+                if (selectedTechnique === technique.id) {
+                  console.log("Open modal");
+                  openModal();
+                }
+              }}
+            >
               Learn
             </span>
           </div>
